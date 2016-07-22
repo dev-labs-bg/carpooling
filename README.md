@@ -1,3 +1,6 @@
 INSTALLATION
 ------------
-Just run <code>npm install</code> in the directory where the app is. After that you will be able to run it.
+1. Open terminal (in Linux) or command prompt (in Windows)
+2. Go to the directory where the app is downloaded
+3. Run <code>npm install</code> that command
+4. Run the app
