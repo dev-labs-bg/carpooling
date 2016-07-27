@@ -1,22 +1,22 @@
 var mongoose = require( 'mongoose' );
 var Schema = mongoose.Schema;
 
-// This is the adress schema
-var adressSchema = new Schema( {
+// The address schema is used in the group schema
+var addressSchema = new Schema( {
   coordinates: {
     type: Point, required: true
   }
 } );
 
-//This is the group schema
+// The group schema is used to create the group model
 var groupSchema = new Schema( {
   name:      {
     type: String, required: true
   }, adress: {
-    type: adressSchema, required: true
+    type: addressSchema, required: true
   }
 } );
 
-// Creates the group model in the database and put it in the module.exmports
+// Creates the group model in the database and put it in the module.exports
 var Groups = mongoose.model( 'Groups', groupSchema );
 module.exports = Groups;
