@@ -12,7 +12,7 @@ var addressSchema = new Schema( {
 var passengerSchema = new Schema( {
   user_id:   {
     type: mongoose.Schema.objectId, ref: "Users", required: true
-  }, adress: {
+  }, address: {
     type: addressSchema, required: true
   }
 } );
@@ -21,9 +21,9 @@ var passengerSchema = new Schema( {
 var routeSchema = new Schema( {
   group_id:        {
     type: mongoose.Schema.ObjectId, ref: "Groups", requred: true
-  }, start_adress: {
+  }, start_address: {
     type: addressSchema, required: true
-  }, end_adress:   {
+  }, end_address:   {
     type: addressSchema, requred: true
   }, start_time:   {
     type: Date, requred: true
