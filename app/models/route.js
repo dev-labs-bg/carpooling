@@ -1,30 +1,30 @@
 var mongoose = require( 'mongoose' );
 var Schema = mongoose.Schema;
 
-// This is the adress schema
-var adressSchema = new Schema( {
+// The address schema is used in the passenger schema and in the route schema
+var addressSchema = new Schema( {
   coordinates: {
     type: Point, required: true
   }
 } );
 
-// This is the passenger schema
+// The passenger schema is used in the route schema
 var passengerSchema = new Schema( {
   user_id:   {
     type: mongoose.Schema.objectId, ref: "Users", required: true
   }, adress: {
-    type: adressSchema, required: true
+    type: addressSchema, required: true
   }
 } );
 
-// This is the route schema
+// The route schema is used to create the route model
 var routeSchema = new Schema( {
   group_id:        {
     type: mongoose.Schema.ObjectId, ref: "Groups", requred: true
   }, start_adress: {
-    type: adressSchema, required: true
+    type: addressSchema, required: true
   }, end_adress:   {
-    type: adressSchema, requred: true
+    type: addressSchema, requred: true
   }, start_time:   {
     type: Date, requred: true
   }, driver_id:    {
