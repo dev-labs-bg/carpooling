@@ -12,7 +12,7 @@ var addressSchema = new Schema( {
 var groupSchema = new Schema( {
   name:      {
     type: String, required: true
-  }, adress: {
+  }, address: {
     type: addressSchema, required: true
   }
 } );
