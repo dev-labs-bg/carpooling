@@ -1,7 +1,7 @@
 var mongoose = require( 'mongoose' );
 var Schema = mongoose.Schema;
 
-// This is the vehicle schema
+// The vehicle schema is used in the user schema
 var vehicleSchema = new Schema( {
   brand:    {
     type: String, required: true
@@ -10,8 +10,8 @@ var vehicleSchema = new Schema( {
   }
 } );
 
-//This is the adress schema
-var adressSchema = new Schema( {
+//The address schema is used in the user schema
+var addressSchema = new Schema( {
   name:           {
     type: String, required: true
   }, coordinates: {
@@ -19,7 +19,7 @@ var adressSchema = new Schema( {
   }
 } );
 
-// This is the user schema
+// The user schema is used to create the user model
 var userSchema = new Schema( {
   name:             {
     type: String, required: true
@@ -27,8 +27,8 @@ var userSchema = new Schema( {
     type: String, required: true
   }, vehicles:      [{
     type: vehicleSchema
-  }], adresses:     [{
-    type: adressSchema
+  }], addresses:     [{
+    type: addressSchema
   }], groups:       [{
     type: mongoose.Schema.objectId, ref: 'Groups'
   }]
