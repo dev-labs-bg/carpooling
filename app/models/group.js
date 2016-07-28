@@ -10,7 +10,7 @@ var addressSchema = new Schema( {
 
 // The group schema is used to create the group model
 var groupSchema = new Schema( {
-  name:      {
+  name:       {
     type: String, required: true
   }, address: {
     type: addressSchema, required: true

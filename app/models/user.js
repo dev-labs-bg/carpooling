@@ -27,7 +27,7 @@ var userSchema = new Schema( {
     type: String, required: true
   }, vehicles:      [{
     type: vehicleSchema
-  }], addresses:     [{
+  }], addresses:    [{
     type: addressSchema
   }], groups:       [{
     type: mongoose.Schema.objectId, ref: 'Groups'
