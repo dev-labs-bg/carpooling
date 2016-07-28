@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 // The address schema is used in the group schema
 var addressSchema = new Schema( {
   coordinates: {
-    type: Point, required: true
+    longitude: {type: Number, required: true}, latitude: {type: Number, required: true}
   }
 } );
 

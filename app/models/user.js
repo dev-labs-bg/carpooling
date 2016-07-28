@@ -15,7 +15,7 @@ var addressSchema = new Schema( {
   name:           {
     type: String, required: true
   }, coordinates: {
-    type: Point, required: true
+    longitude: {type: Number, required: true}, latitude: {type: Number, required: true}
   }
 } );
 
@@ -25,12 +25,8 @@ var userSchema = new Schema( {
     type: String, required: true
   }, mobile_number: {
     type: String, required: true
-  }, vehicles:      [{
-    type: vehicleSchema
-  }], addresses:    [{
-    type: addressSchema
-  }], groups:       [{
-    type: mongoose.Schema.objectId, ref: 'Groups'
+  }, vehicles:      [vehicleSchema], addresses: [addressSchema], groups: [{
+    type: mongoose.Schema.ObjectId, ref: 'Groups'
   }]
 } );
 
