@@ -6,7 +6,7 @@ var userRepository = require( '../repositories/user.js' );
  *
  *  From here all methods connected with users will be executed
  *
- * @param app
+ * @param {Server Object} app
  */
 module.exports = function( app ) {
   app.use( bodyParser.json() );
