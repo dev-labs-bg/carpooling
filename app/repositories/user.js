@@ -32,19 +32,18 @@ module.exports.findUserByEmail = function( email ) {
  * @returns {Object}
  */
 module.exports.authenticateUser = function( user, userPassword ) {
-  if ( !user ) return {
-    success: false, message: 'User not found'
-  }; else {
-    if ( user.password !== userPassword ) {
-      return {
-        success: false, message: 'Password does not match'
-      };
-    } else {
-      var token = jwt.sign( user, config.secret, {} );
+  if ( !user )
+    return {
+      success: false, message: 'User not found'
+    };
 
-      return {
-        success: true, message: 'Token is ready', token: token
-      };
-    }
-  }
+  if ( user.password !== userPassword )
+    return {
+      success: false, message: 'Password does not match'
+    };
+
+  var token = jwt.sign( user, config.secret, {} );
+  return {
+    success: true, message: 'Token is ready', token: token
+  };
 };

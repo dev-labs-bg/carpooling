@@ -37,7 +37,6 @@ module.exports = function( app ) {
       } ). catch( function( err ) {
       res.json( err );
     } ).then( function( user ) {
-      console.log(user);
       res.json( userRepository.authenticateUser( user, userPassword ) );
     } );
   } );
