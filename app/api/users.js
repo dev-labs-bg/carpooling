@@ -15,8 +15,7 @@ module.exports = function( app ) {
   // When a new user needs to be registered
   app.post( '/api/users', function( req, res ) {
 
-    //Get the user parameters from the request's body and execute the create user method from
-    // the user repository
+    // Create user by the passed request's parameters.
     var userParams = req.body;
     userRepository.createUser( userParams )
       .then( function( product ) {
