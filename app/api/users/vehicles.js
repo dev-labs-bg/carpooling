@@ -14,6 +14,15 @@ module.exports = function( app ) {
   // Get all vehicles of the user with the given id
   app.get( '/api/users/:userId/vehicles', function( req, res ) {
     var userId = req.params.userId;
+
     userRepository.getAllVehicles( userId, res );
+  } );
+
+  // Add new vehicle to the user with the given id
+  app.post( '/api/users/:userId/vehicles', function( req, res ) {
+    var userId = req.params.userId;
+    var vehicleParams = req.body.vehicleParams;
+
+    userRepository.addVehicle( userId, vehicleParams, res );
   } );
 };

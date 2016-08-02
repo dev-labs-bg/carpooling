@@ -68,9 +68,29 @@ module.exports.getAllVehicles = function( id, res ) {
       success: false, message: 'User with the given id was not found'
     } );
   } ).then( function( user ) {
-    console.log(user.vehicles);
+    console.log( user.vehicles );
     res.json( {
       success: true, vehicles: user.vehicles
     } );
+  } );
+};
+
+/**
+ * This method is used to add vehicle to a user with a given id
+ *
+ * @param {String} id - The id of the user to whom the vehicle will be added
+ * @param {Vehicle Object} vehicleParams - The new vehicle which will be added
+ * @param res - The response of the HTTP request
+ */
+module.exports.addVehicle = function( id, vehicleParams, res ) {
+  this.findUserById( id )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( err );
+  } ).then( function( user ) {
+    user.vehicles.push( vehicleParams );
+    user.save();
+    res.json( user );
   } );
 };
