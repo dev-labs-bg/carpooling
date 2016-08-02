@@ -31,3 +31,14 @@ module.exports.findUserByEmail = function( email ) {
 module.exports.findUserById = function( id ) {
   return User.findById( {_id: id} );
 };
+
+/**
+ * This method is used to update user by given id and new data
+ *
+ * @param {String} id - The id of the user we need to update
+ * @param {Object} userParams - The new data which will be saved
+ * @returns {Promise}
+ */
+module.exports.updateUserById = function( id, userParams ) {
+  return User.findByIdAndUpdate({_id: id}, userParams);
+};

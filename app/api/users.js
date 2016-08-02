@@ -59,4 +59,17 @@ module.exports = function( app ) {
       res.json( err );
     } );
   } );
+
+  // Update user by given id
+  app.put( '/api/users/:id', function( req, res ) {
+    var userId = req.params.id;
+    var userParams = req.body.newData;
+
+    userRepository.updateUserById( userId, userParams )
+      .then( function( product ) {
+        res.json( product );
+      } ).catch( function( err ) {
+      res.json( err );
+    } );
+  } );
 };
