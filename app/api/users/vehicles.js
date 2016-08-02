@@ -25,4 +25,12 @@ module.exports = function( app ) {
 
     userRepository.addVehicle( userId, vehicleParams, res );
   } );
+
+  // Get vehicle by id of the user with a given id
+  app.get( '/api/users/:userId/vehicles/:vehicleId', function( req, res ) {
+    var userId = req.params.userId;
+    var vehicleId = req.params.vehicleId;
+
+    userRepository.getVehicleById( userId, vehicleId, res );
+  } );
 };

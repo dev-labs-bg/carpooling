@@ -94,3 +94,25 @@ module.exports.addVehicle = function( id, vehicleParams, res ) {
     res.json( user );
   } );
 };
+
+/**
+ * This method is used to get vehicle by id of a given user
+ *
+ * @param {String} userId - The id of the user whose vehicle we need get
+ * @param {String} vehicleId - The id of the vehicle we need to get
+ * @param res - The response of the HTTP request
+ */
+module.exports.getVehicleById = function( userId, vehicleId, res ) {
+  this.findUserById( userId )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( err );
+  } ).then( function( user ) {
+    user.vehicles.forEach( function( vehicle ) {
+      if ( vehicle._id == vehicleId ) {
+        res.json( vehicle );
+      }
+    } );
+  } );
+};
