@@ -52,3 +52,25 @@ module.exports.updateUserById = function( id, userParams ) {
 module.exports.deleteUserById = function( id ) {
   return User.findByIdAndRemove( {_id: id} );
 };
+
+/**
+ * This method is used to get all the vehicles of the user with the given id
+ *
+ * @param {String} id - The id of the user whose vehicles we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllVehicles = function( id, res ) {
+  this.findUserById( id )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'User with the given id was not found'
+    } );
+  } ).then( function( user ) {
+    console.log(user.vehicles);
+    res.json( {
+      success: true, vehicles: user.vehicles
+    } );
+  } );
+};

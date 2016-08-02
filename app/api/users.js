@@ -1,6 +1,7 @@
 var bodyParser = require( 'body-parser' );
 var userRepository = require( '../repositories/user.js' );
 var userService = require( '../services/user.js' );
+var vehiclesApi = require( './users/vehicles.js' );
 
 /**
  *  This is the main part in the users api
@@ -74,20 +75,21 @@ module.exports = function( app ) {
   } );
 
   // Delete user by given id
-  app.delete('/api/users/:id', function( req, res ) {
+  app.delete( '/api/users/:id', function( req, res ) {
     var userId = req.params.id;
 
-    userRepository.deleteUserById(userId)
+    userRepository.deleteUserById( userId )
       .then( function( product ) {
-        res.json({
-          success: true,
-          message: 'User deleted successfully'
-        });
+        res.json( {
+          success: true, message: 'User deleted successfully'
+        } );
       } ).catch( function( err ) {
-        res.json({
-          success: false,
-          message: 'Failed to delete user'
-        })
-    })
-  })
+      res.json( {
+        success: false, message: 'Failed to delete user'
+      } );
+    } );
+  } );
+
+  // VehicleApi will execute all methods connected by the vehicles of a given user
+  vehiclesApi(app);
 };
