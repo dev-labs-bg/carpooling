@@ -1,5 +1,6 @@
 var mongoose = require( 'mongoose' );
 var User = require( '../models/user.js' );
+var _ = require( 'lodash' );
 
 /**
  * This method is used to register new user with the given params
@@ -109,10 +110,6 @@ module.exports.getVehicleById = function( userId, vehicleId, res ) {
     } ).catch( function( err ) {
     res.json( err );
   } ).then( function( user ) {
-    user.vehicles.forEach( function( vehicle ) {
-      if ( vehicle._id == vehicleId ) {
-        res.json( vehicle );
-      }
-    } );
+    res.json( _.find( user.vehicles, {id: vehicleId} ) );
   } );
 };
