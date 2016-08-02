@@ -1,5 +1,6 @@
 var bodyParser = require( 'body-parser' );
 var userRepository = require( '../repositories/user.js' );
+var userService = require('../services/user.js');
 
 /**
  *  This is the main part in the users api
@@ -37,7 +38,7 @@ module.exports = function( app ) {
       } ). catch( function( err ) {
       res.json( err );
     } ).then( function( user ) {
-      res.json( userRepository.authenticateUser( user, userPassword ) );
+      res.json( userService.authenticateUser( user, userPassword ) );
     } );
   } );
 };
