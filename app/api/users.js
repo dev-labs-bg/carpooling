@@ -1,6 +1,6 @@
 var bodyParser = require( 'body-parser' );
 var userRepository = require( '../repositories/user.js' );
-var userService = require('../services/user.js');
+var userService = require( '../services/user.js' );
 
 /**
  *  This is the main part in the users api
@@ -39,6 +39,24 @@ module.exports = function( app ) {
       res.json( err );
     } ).then( function( user ) {
       res.json( userService.authenticateUser( user, userPassword ) );
+    } );
+  } );
+
+  // Stop users who aren't authenticated and verifies their tokens
+  app.use( function( req, res, next ) {
+    var token = req.body.token || req.query.token || req.headers['x-acess-token'];
+    userService.verifyToken( token, res, next );
+  } );
+
+  // Find user by given id
+  app.get( '/api/users/:id', function( req, res ) {
+    var userId = req.params.id;
+
+    userRepository.findUserById( userId )
+      .then( function( product ) {
+        res.json( product );
+      } ).catch( function( err ) {
+      res.json( err );
     } );
   } );
 };

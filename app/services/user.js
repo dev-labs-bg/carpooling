@@ -24,3 +24,27 @@ module.exports.authenticateUser = function( user, userPassword ) {
     success: true, message: 'Token is ready', token: token
   };
 };
+
+/**
+ * Verifies given token
+ *
+ * @param {JSON web token} token - The token which should be verified
+ * @returns {Object}
+ */
+module.exports.verifyToken = function( token, res, next ) {
+  if ( !token ) {
+    return res.status( 403 ).send( {
+      success: false, message: 'No token provided'
+    } );
+  }
+
+  jwt.verify( token, config.secret, function( err, decoded ) {
+    if ( err )
+      res.json( {
+        success: false, message: 'Failed to authenticate'
+      } ); else {
+      res.decoded = decoded;
+      next();
+    }
+  } );
+};

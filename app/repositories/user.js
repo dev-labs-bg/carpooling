@@ -21,3 +21,13 @@ module.exports.createUser = function( userParams ) {
 module.exports.findUserByEmail = function( email ) {
   return User.findOne( {email: email} );
 };
+
+/**
+ * This method is used to find user by given id in the database
+ *
+ * @param {String} id - The id of the user we need to find
+ * @returns {Promise}
+ */
+module.exports.findUserById = function( id ) {
+  return User.findById( {_id: id} );
+};
