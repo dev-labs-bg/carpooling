@@ -21,7 +21,11 @@ var addressSchema = new Schema( {
 
 // The user schema is used to create the user model
 var userSchema = new Schema( {
-  name:             {
+  email:            {
+    type: String, required: true
+  }, password:      {
+    type: String, required: true
+  }, name:          {
     type: String, required: true
   }, mobile_number: {
     type: String, required: true
