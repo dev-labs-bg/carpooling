@@ -40,5 +40,15 @@ module.exports.findUserById = function( id ) {
  * @returns {Promise}
  */
 module.exports.updateUserById = function( id, userParams ) {
-  return User.findByIdAndUpdate({_id: id}, userParams);
+  return User.findByIdAndUpdate( {_id: id}, userParams );
+};
+
+/**
+ * This method is used to delete user by given id
+ *
+ * @param {String} id - The id of the user we need to delete
+ * @returns {Promise}
+ */
+module.exports.deleteUserById = function( id ) {
+  return User.findByIdAndRemove( {_id: id} );
 };

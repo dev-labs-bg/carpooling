@@ -44,7 +44,7 @@ module.exports = function( app ) {
 
   // Stop users who aren't authenticated and verifies their tokens
   app.use( function( req, res, next ) {
-    var token = req.body.token || req.query.token || req.headers['x-acess-token'];
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
     userService.verifyToken( token, res, next );
   } );
 
@@ -72,4 +72,22 @@ module.exports = function( app ) {
       res.json( err );
     } );
   } );
+
+  // Delete user by given id
+  app.delete('/api/users/:id', function( req, res ) {
+    var userId = req.params.id;
+
+    userRepository.deleteUserById(userId)
+      .then( function( product ) {
+        res.json({
+          success: true,
+          message: 'User deleted successfully'
+        });
+      } ).catch( function( err ) {
+        res.json({
+          success: false,
+          message: 'Failed to delete user'
+        })
+    })
+  })
 };
