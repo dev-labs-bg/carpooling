@@ -3,6 +3,7 @@ var userRepository = require( '../repositories/user.js' );
 var userService = require( '../services/user.js' );
 var vehiclesApi = require( './users/vehicles.js' );
 var addressesApi = require( './users/addresses.js' );
+var usersCollection = require( '../collections/users.js' );
 
 /**
  *  This is the main part in the users api
@@ -91,9 +92,12 @@ module.exports = function( app ) {
     } );
   } );
 
-  // VehiclesApi will execute all methods connected by the vehicles of a given user
+  // VehiclesApi will execute all methods connected with the vehicles of a given user
   vehiclesApi( app );
 
-  // AddressesApi will execute all methods connected by the addresses of a given user
+  // AddressesApi will execute all methods connected with the addresses of a given user
   addressesApi( app );
+
+  // UsersCollection will execute all methods connected with more than one user
+  usersCollection( app );
 };

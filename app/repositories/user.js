@@ -223,3 +223,14 @@ module.exports.deleteAddressById = function( userId, addressId, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to get all users
+ *
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllUsers = function( res ) {
+  User.find( function( err, users ) {
+    res.json( users );
+  } );
+};
