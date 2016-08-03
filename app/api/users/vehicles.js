@@ -38,5 +38,5 @@ module.exports = function( app ) {
     var vehicleId = req.params.vehicleId;
 
     userRepository.deleteVehicleById( userId, vehicleId, res );
-  } )
+  } );
 };

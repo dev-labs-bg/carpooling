@@ -31,4 +31,12 @@ module.exports = function( app ) {
 
     userRepository.getAddressById( userId, addressId, res );
   } );
+
+  // Delete address by id from the user with a given id
+  app.delete( '/api/users/:userId/addresses/:addressId', function( req, res ) {
+    var userId = req.params.userId;
+    var addressId = req.params.addressId;
+
+    userRepository.deleteAddressById( userId, addressId, res );
+  } );
 };

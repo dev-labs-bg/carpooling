@@ -196,3 +196,30 @@ module.exports.getAddressById = function( userId, addressId, res ) {
     res.json( _.find( user.addresses, {id: addressId} ) );
   } );
 };
+
+/**
+ * This method is used to delete address by id of a given user
+ *
+ * @param {String} userId - The id of the user whose address we need to delete
+ * @param {String} addressId - The id of the address which will be deleted
+ * @param res - The response of the HTTP request
+ */
+module.exports.deleteAddressById = function( userId, addressId, res ) {
+  this.findUserById( userId )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( err );
+  } ).then( function( user ) {
+
+    console.log( user.addresses );
+    user.addresses = _.remove( user.addresses, function( address ) {
+      return address._id != addressId;
+    } );
+    console.log( user.addresses );
+    user.save();
+    res.json( {
+      success: true, message: 'Address deleted successfully'
+    } );
+  } );
+};
