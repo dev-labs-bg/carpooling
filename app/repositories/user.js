@@ -77,7 +77,7 @@ module.exports.getAllVehicles = function( id, res ) {
 };
 
 /**
- * This method is used to add vehicle to a user with a given id
+ * This method is used to add vehicle to the user with a given id
  *
  * @param {String} id - The id of the user to whom the vehicle will be added
  * @param {Vehicle Object} vehicleParams - The new vehicle which will be added
@@ -153,6 +153,28 @@ module.exports.getAllAddresses = function( id, res ) {
   } ).then( function( user ) {
     res.json( {
       success: true, addresses: user.addresses
+    } );
+  } );
+};
+
+/**
+ * This method is used to add address to the user with a given id
+ *
+ * @param {String} id - The id of the user to whom the address will be added
+ * @param {Address Object} addressParams - The new address which will be added
+ * @param res - The response of the HTTP request
+ */
+module.exports.addAddress = function( id, addressParams, res ) {
+  this.findUserById( id )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( err );
+  } ).then( function( user ) {
+    user.addresses.push( addressParams );
+    user.save();
+    res.json( {
+      success: true, message: 'Address added successfully'
     } );
   } );
 };

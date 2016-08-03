@@ -15,4 +15,12 @@ module.exports = function( app ) {
 
     userRepository.getAllAddresses( userId, res );
   } );
+
+  // Add new address to the user with a given id
+  app.post( '/api/users/:id/addresses', function( req, res ) {
+    var userId = req.params.id;
+    var addressParams = req.body.addressParams;
+
+    userRepository.addAddress( userId, addressParams, res );
+  } )
 };
