@@ -1,6 +1,7 @@
 var bodyParser = require( 'body-parser' );
 var userRepository = require( '../repositories/user.js' );
 var userService = require( '../services/user.js' );
+var authService = require( '../services/auth.js' );
 var vehiclesApi = require( './users/vehicles.js' );
 var addressesApi = require( './users/addresses.js' );
 var usersCollection = require( '../collections/users.js' );
@@ -48,7 +49,7 @@ module.exports = function( app ) {
   // Stop users who aren't authenticated and verifies their tokens
   app.use( function( req, res, next ) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    userService.verifyToken( token, res, next );
+    authService.verifyToken( token, res, next );
   } );
 
   // Find user by given id
