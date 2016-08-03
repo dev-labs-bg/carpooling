@@ -22,5 +22,13 @@ module.exports = function( app ) {
     var addressParams = req.body.addressParams;
 
     userRepository.addAddress( userId, addressParams, res );
-  } )
+  } );
+
+  // Get address by id from the user with a given id
+  app.get( '/api/users/:userId/addresses/:addressId', function( req, res ) {
+    var userId = req.params.userId;
+    var addressId = req.params.addressId;
+
+    userRepository.getAddressById( userId, addressId, res );
+  } );
 };

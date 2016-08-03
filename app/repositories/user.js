@@ -178,3 +178,21 @@ module.exports.addAddress = function( id, addressParams, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to get address by id from the user with a given id
+ *
+ * @param {String} userId - The id of the user whose address we need
+ * @param {String} addressId - The id of the address we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAddressById = function( userId, addressId, res ) {
+  this.findUserById( userId )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( err );
+  } ).then( function( user ) {
+    res.json( _.find( user.addresses, {id: addressId} ) );
+  } );
+};
