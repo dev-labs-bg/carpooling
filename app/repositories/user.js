@@ -55,7 +55,7 @@ module.exports.deleteUserById = function( id ) {
 };
 
 /**
- * This method is used to get all the vehicles of the user with the given id
+ * This method is used to get all the vehicles of the user with a given id
  *
  * @param {String} id - The id of the user whose vehicles we need
  * @param res - The response of the HTTP request
@@ -134,6 +134,25 @@ module.exports.deleteVehicleById = function( userId, vehicleId, res ) {
     user.save();
     res.json( {
       success: true, message: 'Vehicle deleted successfully'
+    } );
+  } );
+};
+
+/**
+ * This method is used to get all addresses of the user with a given id
+ *
+ * @param {String} id - The id of the user whose addresses we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllAddresses = function( id, res ) {
+  this.findUserById( id )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( err );
+  } ).then( function( user ) {
+    res.json( {
+      success: true, addresses: user.addresses
     } );
   } );
 };

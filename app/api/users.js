@@ -2,6 +2,7 @@ var bodyParser = require( 'body-parser' );
 var userRepository = require( '../repositories/user.js' );
 var userService = require( '../services/user.js' );
 var vehiclesApi = require( './users/vehicles.js' );
+var addressesApi = require( './users/addresses.js' );
 
 /**
  *  This is the main part in the users api
@@ -90,6 +91,9 @@ module.exports = function( app ) {
     } );
   } );
 
-  // VehicleApi will execute all methods connected by the vehicles of a given user
-  vehiclesApi(app);
+  // VehiclesApi will execute all methods connected by the vehicles of a given user
+  vehiclesApi( app );
+
+  // AddressesApi will execute all methods connected by the addresses of a given user
+  addressesApi( app );
 };
