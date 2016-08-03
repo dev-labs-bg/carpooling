@@ -113,3 +113,27 @@ module.exports.getVehicleById = function( userId, vehicleId, res ) {
     res.json( _.find( user.vehicles, {id: vehicleId} ) );
   } );
 };
+
+/**
+ * This method is used to delete vehicle by id of a given user
+ *
+ * @param {String} userId - The id of the user whose vehicle we need to delete
+ * @param {String} vehicleId - The id of the vehicle we need to delete
+ * @param res - The response of the HTTP request
+ */
+module.exports.deleteVehicleById = function( userId, vehicleId, res ) {
+  this.findUserById( userId )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( err );
+  } ).then( function( user ) {
+    user.vehicles = _.remove( user.vehicles, function( vehicle ) {
+      return vehicle._id != vehicleId;
+    } );
+    user.save();
+    res.json( {
+      success: true, message: 'Vehicle deleted successfully'
+    } );
+  } );
+};

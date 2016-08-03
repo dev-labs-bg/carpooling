@@ -33,4 +33,12 @@ module.exports = function( app ) {
 
     userRepository.getVehicleById( userId, vehicleId, res );
   } );
+
+  // Delete vehicle by id of the user with a given id
+  app.delete( '/api/users/:userId/vehicles/:vehicleId', function( req, res ) {
+    var userId = req.params.userId;
+    var vehicleId = req.params.vehicleId;
+
+    userRepository.deleteVehicleById( userId, vehicleId, res );
+  } )
 };
