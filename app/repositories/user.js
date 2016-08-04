@@ -37,7 +37,7 @@ module.exports.findUserById = function( id ) {
  * This method is used to update user by given id and new data
  *
  * @param {String} id - The id of the user we need to update
- * @param {Object} userParams - The new data which will be saved
+ * @param {Object} userParams - You can take the schema of this object from the User model
  * @returns {Promise}
  */
 module.exports.updateUserById = function( id, userParams ) {

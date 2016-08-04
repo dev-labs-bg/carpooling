@@ -37,7 +37,27 @@ module.exports.getGroupById = function( id, res ) {
       } );
     } ).catch( function( err ) {
     res.json( {
-      success: false, message: 'Group was not found'
+      success: false, message: 'Group was not found', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to update group by id
+ *
+ * @param {String} id - The id of the group which will be updated
+ * @param {Object} groupParams - You can take the schema of this object from Group model
+ * @param res - The response of the HTTP request
+ */
+module.exports.updateGroupById = function( id, groupParams, res ) {
+  Group.findByIdAndUpdate( {_id: id}, groupParams )
+    .then( function( product ) {
+      res.json( {
+        success: true, message: 'Group updated successfully', group: product
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group failed to update', error: err
     } );
   } );
 };

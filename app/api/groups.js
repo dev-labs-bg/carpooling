@@ -33,4 +33,11 @@ module.exports = function( app ) {
     groupRepository.getGroupById( id, res );
   } );
 
+  // Update group by given id
+  app.put( '/api/groups/:id', function( req, res ) {
+    var id = req.params.id;
+    var groupParams = req.body.groupParams;
+
+    groupRepository.updateGroupById ( id, groupParams, res );
+  } );
 };
