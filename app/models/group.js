@@ -14,7 +14,9 @@ var groupSchema = new Schema( {
     type: String, required: true
   }, address: {
     type: addressSchema, required: true
-  }
+  }, users:   [{
+    type: mongoose.Schema.ObjectId, ref: 'Users'
+  }]
 } );
 
 // Creates the group model in the database and put it in the module.exports
