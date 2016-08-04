@@ -23,3 +23,22 @@ module.exports.createGroup = function( groupParams, res ) {
   } );
 };
 
+/**
+ * This method is used to get group by id
+ *
+ * @param {String} id - The id of the group we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getGroupById = function( id, res ) {
+  Group.findById( {_id: id} )
+    .then( function( product ) {
+      res.json( {
+        success: true, message: 'Group was found', group: product
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group was not found'
+    } );
+  } );
+};
+

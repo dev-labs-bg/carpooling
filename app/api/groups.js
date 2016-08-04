@@ -26,4 +26,11 @@ module.exports = function( app ) {
     groupRepository.createGroup( groupParams, res );
   } );
 
+  // Find group by given id
+  app.get( '/api/groups/:id', function( req, res ) {
+    var id = req.params.id;
+
+    groupRepository.getGroupById( id, res );
+  } );
+
 };
