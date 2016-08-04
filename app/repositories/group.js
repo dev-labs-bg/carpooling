@@ -1,6 +1,7 @@
 var mongoose = require( 'mongoose' );
 var Group = require( '../models/group.js' );
 var _ = require( 'lodash' );
+var userRepository = require( './user.js' );
 
 /**
  * This method is used to create new group with the given params
@@ -67,6 +68,39 @@ module.exports.deleteGroupById = function( id, res ) {
     } ).catch( function( err ) {
     res.json( {
       success: false, message: 'Group failed to delete', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to get all users of a given group
+ *
+ * @param {String} id - The id of the group whose users we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllUsers = function( id, res ) {
+  this.getGroupById( id )
+    .then( function( product ) {
+      return product;
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Failed to get all users', error: err
+    } );
+  } ).then( function( group ) {
+    var allUsersPromises = [], allUsers = [];
+    group.users.forEach( function( userId ) {
+      allUsersPromises.push( userRepository.findUserById( userId ) );
+    } );
+
+    Promise.all( allUsersPromises )
+      .then( function( product ) {
+        res.json( {
+          success: true, message: 'Got all users successfully', users: product
+        } );
+      } ).catch( function( err ) {
+      res.json( {
+        success: false, message: 'Failed to get all users', error: err
+      } );
     } );
   } );
 };

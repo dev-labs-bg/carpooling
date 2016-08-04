@@ -57,4 +57,11 @@ module.exports = function( app ) {
 
     groupService.deleteGroupById( id, res );
   } );
+
+  // Get all users who are in the given group
+  app.get( '/api/groups/:id/users', function( req, res ) {
+    var id = req.params.id;
+
+    groupRepository.getAllUsers( id, res );
+  } );
 };
