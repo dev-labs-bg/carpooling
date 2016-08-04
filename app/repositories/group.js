@@ -104,3 +104,20 @@ module.exports.getAllUsers = function( id, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to get all groups from the database
+ *
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllGroups = function( res ) {
+  Group.find( function( err, groups ) {
+    if ( err ) res.json( {
+      success: false, message: 'Failed to get all groups', error: err
+    } );
+
+    res.json( {
+      success: true, message: 'Got all groups successfully', groups: groups
+    } );
+  } );
+};
