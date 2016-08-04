@@ -8,7 +8,7 @@ var _ = require( 'lodash' );
  * @param {Object} userParams - You can take the schema of this object from the User model
  * @returns {Promise}
  */
-module.exports.createUser = function( userParams ) {
+module.exports.create = function( userParams ) {
   var newUser = new User( userParams );
   return newUser.save();
 };
@@ -19,7 +19,7 @@ module.exports.createUser = function( userParams ) {
  * @param {String} email - The email of the user we need to find
  * @returns {Promise}
  */
-module.exports.findUserByEmail = function( email ) {
+module.exports.findByEmail = function( email ) {
   return User.findOne( {email: email} );
 };
 
@@ -29,7 +29,7 @@ module.exports.findUserByEmail = function( email ) {
  * @param {String} id - The id of the user we need to find
  * @returns {Promise}
  */
-module.exports.findUserById = function( id ) {
+module.exports.findById = function( id ) {
   return User.findById( {_id: id} );
 };
 
@@ -37,10 +37,10 @@ module.exports.findUserById = function( id ) {
  * This method is used to update user by given id and new data
  *
  * @param {String} id - The id of the user we need to update
- * @param {Object} userParams - The new data which will be saved
+ * @param {Object} userParams - You can take the schema of this object from the User model
  * @returns {Promise}
  */
-module.exports.updateUserById = function( id, userParams ) {
+module.exports.updateById = function( id, userParams ) {
   return User.findByIdAndUpdate( {_id: id}, userParams );
 };
 
@@ -50,7 +50,7 @@ module.exports.updateUserById = function( id, userParams ) {
  * @param {String} id - The id of the user we need to delete
  * @returns {Promise}
  */
-module.exports.deleteUserById = function( id ) {
+module.exports.deleteById = function( id ) {
   return User.findByIdAndRemove( {_id: id} );
 };
 
@@ -61,7 +61,7 @@ module.exports.deleteUserById = function( id ) {
  * @param res - The response of the HTTP request
  */
 module.exports.getAllVehicles = function( id, res ) {
-  this.findUserById( id )
+  this.findById( id )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -84,7 +84,7 @@ module.exports.getAllVehicles = function( id, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.addVehicle = function( id, vehicleParams, res ) {
-  this.findUserById( id )
+  this.findById( id )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -104,7 +104,7 @@ module.exports.addVehicle = function( id, vehicleParams, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.getVehicleById = function( userId, vehicleId, res ) {
-  this.findUserById( userId )
+  this.findById( userId )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -122,7 +122,7 @@ module.exports.getVehicleById = function( userId, vehicleId, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.deleteVehicleById = function( userId, vehicleId, res ) {
-  this.findUserById( userId )
+  this.findById( userId )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -145,7 +145,7 @@ module.exports.deleteVehicleById = function( userId, vehicleId, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.getAllAddresses = function( id, res ) {
-  this.findUserById( id )
+  this.findById( id )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -165,7 +165,7 @@ module.exports.getAllAddresses = function( id, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.addAddress = function( id, addressParams, res ) {
-  this.findUserById( id )
+  this.findById( id )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -187,7 +187,7 @@ module.exports.addAddress = function( id, addressParams, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.getAddressById = function( userId, addressId, res ) {
-  this.findUserById( userId )
+  this.findById( userId )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -205,7 +205,7 @@ module.exports.getAddressById = function( userId, addressId, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.deleteAddressById = function( userId, addressId, res ) {
-  this.findUserById( userId )
+  this.findById( userId )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -229,7 +229,7 @@ module.exports.deleteAddressById = function( userId, addressId, res ) {
  *
  * @param res - The response of the HTTP request
  */
-module.exports.getAllUsers = function( res ) {
+module.exports.getAll = function( res ) {
   User.find( function( err, users ) {
     res.json( users );
   } );
