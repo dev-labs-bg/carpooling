@@ -27,19 +27,9 @@ module.exports.createGroup = function( groupParams, res ) {
  * This method is used to get group by id
  *
  * @param {String} id - The id of the group we need
- * @param res - The response of the HTTP request
  */
-module.exports.getGroupById = function( id, res ) {
-  Group.findById( {_id: id} )
-    .then( function( product ) {
-      res.json( {
-        success: true, message: 'Group was found', group: product
-      } );
-    } ).catch( function( err ) {
-    res.json( {
-      success: false, message: 'Group was not found', error: err
-    } );
-  } );
+module.exports.getGroupById = function( id ) {
+  return Group.findById( {_id: id} );
 };
 
 /**
@@ -62,3 +52,21 @@ module.exports.updateGroupById = function( id, groupParams, res ) {
   } );
 };
 
+/**
+ * This method is used to delete group by id
+ *
+ * @param {String} id - The id of the group which will be deleted
+ * @param res - The response of the HTTP request
+ */
+module.exports.deleteGroupById = function( id, res ) {
+  Group.findByIdAndRemove( {_id: id} )
+    .then( function( product ) {
+      res.json( {
+        success: true, message: 'Group deleted successfully'
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group failed to delete', error: err
+    } );
+  } );
+};

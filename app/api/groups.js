@@ -1,6 +1,7 @@
 var bodyParser = require( 'body-parser' );
 var authService = require( '../services/auth.js' );
 var groupRepository = require( '../repositories/group.js' );
+var groupService = require( '../services/group.js' );
 
 /**
  * This is the main part of the groups api
@@ -30,7 +31,16 @@ module.exports = function( app ) {
   app.get( '/api/groups/:id', function( req, res ) {
     var id = req.params.id;
 
-    groupRepository.getGroupById( id, res );
+    groupRepository.getGroupById( id )
+      .then( function( product ) {
+        res.json( {
+          success: true, message: 'Group was found', group: product
+        } );
+      } ).catch( function( err ) {
+      res.json( {
+        success: false, message: 'Group was not found', error: err
+      } );
+    } );
   } );
 
   // Update group by given id
@@ -39,5 +49,12 @@ module.exports = function( app ) {
     var groupParams = req.body.groupParams;
 
     groupRepository.updateGroupById ( id, groupParams, res );
+  } );
+
+  // Delete group by id with all of its connections with the users and the routes
+  app.delete( '/api/groups/:id', function( req, res ) {
+    var id = req.params.id;
+
+    groupService.deleteGroupById( id, res );
   } );
 };
