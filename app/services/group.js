@@ -9,8 +9,8 @@ var _ = require( 'lodash' );
  * @param {String} id - The id of the group which will be deleted
  * @param res - The response of the HTTP request
  */
-module.exports.deleteGroupById = function( id, res ) {
-  groupRepository.getGroupById( id )
+module.exports.deleteById = function( id, res ) {
+  groupRepository.getById( id )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -38,6 +38,6 @@ module.exports.deleteGroupById = function( id, res ) {
 
     //TODO delete every route of that group
 
-    groupRepository.deleteGroupById( id, res );
+    groupRepository.deleteById( id, res );
   } );
 };

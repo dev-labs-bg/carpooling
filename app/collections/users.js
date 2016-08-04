@@ -11,6 +11,6 @@ module.exports = function( app ) {
 
   // Get all users from the database
   app.get( '/api/users', function( req, res ) {
-    userRepository.getAllUsers( res );
+    userRepository.getAll( res );
   } );
 };

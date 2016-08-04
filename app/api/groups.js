@@ -26,14 +26,14 @@ module.exports = function( app ) {
   app.post( '/api/groups', function( req, res ) {
     var groupParams = req.body.groupParams;
 
-    groupRepository.createGroup( groupParams, res );
+    groupRepository.create( groupParams, res );
   } );
 
   // Find group by given id
   app.get( '/api/groups/:id', function( req, res ) {
     var id = req.params.id;
 
-    groupRepository.getGroupById( id )
+    groupRepository.getById( id )
       .then( function( product ) {
         res.json( {
           success: true, message: 'Group was found', group: product
@@ -50,14 +50,14 @@ module.exports = function( app ) {
     var id = req.params.id;
     var groupParams = req.body.groupParams;
 
-    groupRepository.updateGroupById ( id, groupParams, res );
+    groupRepository.updateById ( id, groupParams, res );
   } );
 
   // Delete group by id with all of its connections with the users and the routes
   app.delete( '/api/groups/:id', function( req, res ) {
     var id = req.params.id;
 
-    groupService.deleteGroupById( id, res );
+    groupService.deleteById( id, res );
   } );
 
   // The users app will execute all methods connected with the users of a given group

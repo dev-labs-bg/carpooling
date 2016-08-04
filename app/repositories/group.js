@@ -9,7 +9,7 @@ var userRepository = require( './user.js' );
  * @param {Object} groupParams - You can take the schema of this object from Group model
  * @param res - The respond of the HTTP request
  */
-module.exports.createGroup = function( groupParams, res ) {
+module.exports.create = function( groupParams, res ) {
   var newGroup = new Group( groupParams );
 
   newGroup.save()
@@ -29,7 +29,7 @@ module.exports.createGroup = function( groupParams, res ) {
  *
  * @param {String} id - The id of the group we need
  */
-module.exports.getGroupById = function( id ) {
+module.exports.getById = function( id ) {
   return Group.findById( {_id: id} );
 };
 
@@ -40,7 +40,7 @@ module.exports.getGroupById = function( id ) {
  * @param {Object} groupParams - You can take the schema of this object from Group model
  * @param res - The response of the HTTP request
  */
-module.exports.updateGroupById = function( id, groupParams, res ) {
+module.exports.updateById = function( id, groupParams, res ) {
   Group.findByIdAndUpdate( {_id: id}, groupParams )
     .then( function( product ) {
       res.json( {
@@ -59,7 +59,7 @@ module.exports.updateGroupById = function( id, groupParams, res ) {
  * @param {String} id - The id of the group which will be deleted
  * @param res - The response of the HTTP request
  */
-module.exports.deleteGroupById = function( id, res ) {
+module.exports.deleteById = function( id, res ) {
   Group.findByIdAndRemove( {_id: id} )
     .then( function( product ) {
       res.json( {
@@ -79,7 +79,7 @@ module.exports.deleteGroupById = function( id, res ) {
  * @param res - The response of the HTTP request
  */
 module.exports.getAllUsers = function( id, res ) {
-  this.getGroupById( id )
+  this.getById( id )
     .then( function( product ) {
       return product;
     } ).catch( function( err ) {
@@ -89,7 +89,7 @@ module.exports.getAllUsers = function( id, res ) {
   } ).then( function( group ) {
     var allUsersPromises = [], allUsers = [];
     group.users.forEach( function( userId ) {
-      allUsersPromises.push( userRepository.findUserById( userId ) );
+      allUsersPromises.push( userRepository.findById( userId ) );
     } );
 
     Promise.all( allUsersPromises )
@@ -110,7 +110,7 @@ module.exports.getAllUsers = function( id, res ) {
  *
  * @param res - The response of the HTTP request
  */
-module.exports.getAllGroups = function( res ) {
+module.exports.getAll = function( res ) {
   Group.find( function( err, groups ) {
     if ( err ) res.json( {
       success: false, message: 'Failed to get all groups', error: err

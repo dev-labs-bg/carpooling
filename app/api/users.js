@@ -22,7 +22,7 @@ module.exports = function( app ) {
 
     // Create user by the passed request's parameters.
     var userParams = req.body;
-    userRepository.createUser( userParams )
+    userRepository.create( userParams )
       .then( function( product ) {
         res.json( product );
       } ).catch( function( err ) {
@@ -36,7 +36,7 @@ module.exports = function( app ) {
     var userPassword = req.body.password;
 
     // Find user by the given email and authenticate him
-    userRepository.findUserByEmail( userEmail )
+    userRepository.findByEmail( userEmail )
       .then( function( product ) {
         return product;
       } ). catch( function( err ) {
@@ -56,7 +56,7 @@ module.exports = function( app ) {
   app.get( '/api/users/:id', function( req, res ) {
     var userId = req.params.id;
 
-    userRepository.findUserById( userId )
+    userRepository.findById( userId )
       .then( function( product ) {
         res.json( product );
       } ).catch( function( err ) {
@@ -69,7 +69,7 @@ module.exports = function( app ) {
     var userId = req.params.id;
     var userParams = req.body.newData;
 
-    userRepository.updateUserById( userId, userParams )
+    userRepository.updateById( userId, userParams )
       .then( function( product ) {
         res.json( product );
       } ).catch( function( err ) {
@@ -81,7 +81,7 @@ module.exports = function( app ) {
   app.delete( '/api/users/:id', function( req, res ) {
     var userId = req.params.id;
 
-    userRepository.deleteUserById( userId )
+    userRepository.deleteById( userId )
       .then( function( product ) {
         res.json( {
           success: true, message: 'User deleted successfully'

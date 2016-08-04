@@ -11,6 +11,6 @@ module.exports = function( app ) {
 
   // Get all groups from the database
   app.get( '/api/groups', function( req, res ) {
-    groupRepository.getAllGroups( res );
-  } )
+    groupRepository.getAll( res );
+  } );
 };
