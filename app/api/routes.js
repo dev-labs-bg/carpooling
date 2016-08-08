@@ -1,6 +1,7 @@
 var bodyParser = require( 'body-parser' );
 var routeRepository = require( '../repositories/route.js' );
 var routeService = require( '../services/route.js' );
+var passengersApi = require( './routes/passengers.js' );
 
 /**
  *  This is the main part in the routes api
@@ -48,11 +49,6 @@ module.exports = function( app ) {
     routeService.deleteById( routeId, res );
   } );
 
-  // Add passenger to the given route
-  app.post( '/api/routes/:id/passengers', function( req, res ) {
-    var routeId = req.params.id;
-    var passengerParams = req.body.passengerParams;
-
-    routeRepository.addPassenger( routeId, passengerParams, res );
-  } );
+  // The passengers api will execute all methods connected with passengers
+  passengersApi( app );
 };

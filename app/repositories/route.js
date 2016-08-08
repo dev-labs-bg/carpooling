@@ -105,3 +105,22 @@ module.exports.addPassenger = function( routeId, passengerParams, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to get all passengers of a given route
+ *
+ * @param {String} id - The id of the route whose passengers we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllPassengers = function( id, res ) {
+  this.findById( id )
+    .then( function( product ) {
+      res.json( {
+        success: true, message: 'All passengers got successfully', passengers: product.passengers
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Failed to get all users', error: err
+    } );
+  } );
+};
