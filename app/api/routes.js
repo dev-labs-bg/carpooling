@@ -17,4 +17,19 @@ module.exports = function( app ) {
     var routeParams = req.body.routeParams;
     routeRepository.create( routeParams, res );
   } );
+
+  // Get route by id
+  app.get( '/api/routes/:id', function( req, res ) {
+    var routeId = req.params.id;
+    routeRepository.findById( routeId )
+      .then( function( product ) {
+        res.json( {
+          success: true, message: 'Route found successfully', route: product
+        } );
+      } ).catch( function( err ) {
+      res.json( {
+        success: false, message: 'Route not found', error: err
+      } );
+    } );
+  } );
 };

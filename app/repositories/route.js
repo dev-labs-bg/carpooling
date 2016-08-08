@@ -27,7 +27,17 @@ module.exports.create = function( routeParams, res ) {
       } );
     } ).catch( function( err ) {
     res.json( {
-      success: false, message: 'User creation failed', error: err
+      success: false, message: 'Route creation failed', error: err
     } );
   } );
+};
+
+/**
+ * This method is used to find route by id
+ *
+ * @param {String} id - The id of the route which is needed
+ * @returns {Promise}
+ */
+module.exports.findById = function( id ) {
+  return Route.findById( {_id: id} );
 };
