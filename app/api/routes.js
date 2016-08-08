@@ -47,4 +47,12 @@ module.exports = function( app ) {
     var routeId = req.params.id;
     routeService.deleteById( routeId, res );
   } );
+
+  // Add passenger to the given route
+  app.post( '/api/routes/:id/passengers', function( req, res ) {
+    var routeId = req.params.id;
+    var passengerParams = req.body.passengerParams;
+
+    routeRepository.addPassenger( routeId, passengerParams, res );
+  } );
 };
