@@ -87,7 +87,7 @@ module.exports.getAllUsers = function( id, res ) {
       success: false, message: 'Failed to get all users', error: err
     } );
   } ).then( function( group ) {
-    var allUsersPromises = [], allUsers = [];
+    var allUsersPromises = [];
     group.users.forEach( function( userId ) {
       allUsersPromises.push( userRepository.findById( userId ) );
     } );

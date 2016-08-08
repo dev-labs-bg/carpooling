@@ -1,5 +1,6 @@
 var mongoose = require( 'mongoose' );
 var User = require( '../models/user.js' );
+var groupRepository = require( './group.js' );
 var _ = require( 'lodash' );
 
 /**
@@ -42,16 +43,6 @@ module.exports.findById = function( id ) {
  */
 module.exports.updateById = function( id, userParams ) {
   return User.findByIdAndUpdate( {_id: id}, userParams );
-};
-
-/**
- * This method is used to delete user by given id
- *
- * @param {String} id - The id of the user we need to delete
- * @returns {Promise}
- */
-module.exports.deleteById = function( id ) {
-  return User.findByIdAndRemove( {_id: id} );
 };
 
 /**
@@ -271,6 +262,37 @@ module.exports.deleteRoute = function( userId, routeId, res ) {
     } ).catch( function( err ) {
     res.json( {
       success: false, message: 'User not found', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to get all groups of the given user
+ *
+ * @param {String} id - The id of the user whose groups we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllGroups = function( id, res ) {
+  this.findById( id )
+    .then( function( product ) {
+      var allGroupsPromises = [];
+      product.groups.forEach( function( groupId ) {
+        allGroupsPromises.push( groupRepository.getById( groupId ) );
+      } );
+
+      Promise.all( allGroupsPromises )
+        .then( function( groups ) {
+          res.json( {
+            success: true, message: 'Got all groups successfully', groups: groups
+          } );
+        } ).catch( function( err ) {
+        res.json( {
+          success: false, message: 'Failed to get all groups', error: err
+        } );
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Failed to get all groups', error: err
     } );
   } );
 };

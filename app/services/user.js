@@ -1,5 +1,6 @@
 var jwt = require( 'jsonwebtoken' );
 var config = require( '../../config/config.js' );
+var userRepository = require( '../repositories/user.js' );
 
 /**
  * This method is used to authenticate user and return json web token
