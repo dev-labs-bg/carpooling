@@ -234,3 +234,22 @@ module.exports.getAll = function( res ) {
     res.json( users );
   } );
 };
+
+/**
+ * This method is used to add new route to the given user
+ *
+ * @param {String} userId - The id of the user to whom the route will be added
+ * @param {String} routeId - The id of the new route
+ * @param res - The response of the HTTP request
+ */
+module.exports.addRoute = function( userId, routeId, res ) {
+  this.findById( userId )
+    .then( function( product ) {
+      product.routes.push( routeId );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'User not found', error: err
+    } );
+  } );
+};
