@@ -253,3 +253,24 @@ module.exports.addRoute = function( userId, routeId, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to remove route by id from the given user
+ *
+ * @param {String} userId - The id of the user from whom the route will be removed
+ * @param {String} routeId - The id of the route which will be removed
+ * @param res - The response of the HTTP request
+ */
+module.exports.deleteRoute = function( userId, routeId, res ) {
+  this.findById( userId )
+    .then( function( product ) {
+      product.routes = _.remove( product.routes, function( route ) {
+        return route != routeId;
+      } );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'User not found', error: err
+    } );
+  } );
+};

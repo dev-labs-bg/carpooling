@@ -18,7 +18,6 @@ module.exports.deleteById = function( id, res ) {
       success: false, message: 'Group failed to delete', error: err
     } );
   } ).then( function( group ) {
-    console.log( group.users );
     group.users.forEach( function( userId ) {
       userRepository.findUserById( userId )
         .then( function( product ) {
@@ -32,7 +31,6 @@ module.exports.deleteById = function( id, res ) {
           return groupId != id;
         } );
         user.save();
-        console.log( user );
       } );
     } );
 

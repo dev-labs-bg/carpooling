@@ -61,3 +61,16 @@ module.exports.updateById = function( id, routeParams, res ) {
     } );
   } );
 };
+
+module.exports.deleteById = function( id, res ) {
+  Route.findByIdAndRemove( {_id: id} )
+    .then( function( product ) {
+      res.json( {
+        success: true, message: 'Route deleted successfully'
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Route failed to delete', error: err
+    } );
+  } );
+};

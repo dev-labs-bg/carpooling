@@ -1,5 +1,6 @@
 var bodyParser = require( 'body-parser' );
 var routeRepository = require( '../repositories/route.js' );
+var routeService = require( '../services/route.js' );
 
 /**
  *  This is the main part in the routes api
@@ -39,5 +40,11 @@ module.exports = function( app ) {
     var routeParams = req.body.routeParams;
 
     routeRepository.updateById( routeId, routeParams, res );
+  } );
+
+  // Delete route by id
+  app.delete( '/api/routes/:id', function( req, res ) {
+    var routeId = req.params.id;
+    routeService.deleteById( routeId, res );
   } );
 };
