@@ -32,4 +32,12 @@ module.exports = function( app ) {
       } );
     } );
   } );
+
+  // Update route by id
+  app.put( '/api/routes/:id', function( req, res ) {
+    var routeId = req.params.id;
+    var routeParams = req.body.routeParams;
+
+    routeRepository.updateById( routeId, routeParams, res );
+  } );
 };

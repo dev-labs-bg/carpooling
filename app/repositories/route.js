@@ -41,3 +41,23 @@ module.exports.create = function( routeParams, res ) {
 module.exports.findById = function( id ) {
   return Route.findById( {_id: id} );
 };
+
+/**
+ * This method is used to update given route with given params
+ *
+ * @param {String} id - The id of the route which will be updated
+ * @param {Object} routeParams - You can take the schema of this object from the Route model
+ * @param res - The response of the HTTP request
+ */
+module.exports.updateById = function( id, routeParams, res ) {
+  Route.findByIdAndUpdate( {_id: id}, routeParams )
+    .then( function( product ) {
+      res.json( {
+        success: true, message: 'Route updated successfully', route: product
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Route failed to update', error: err
+    } );
+  } );
+};
