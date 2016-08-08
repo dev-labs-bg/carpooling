@@ -148,3 +148,20 @@ module.exports.deletePassengerById = function( routeId, passengerId, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to get all routes
+ *
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAll = function( res ) {
+  Route.find( function( err, routes ) {
+    if ( err ) res.json( {
+      success: false, message: 'Failed to get all routes', error: err
+    } );
+
+    res.json( {
+      success: true, message: 'All routes got successfully', routes: routes
+    } );
+  } );
+};
