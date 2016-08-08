@@ -16,6 +16,8 @@ var groupSchema = new Schema( {
     type: addressSchema, required: true
   }, users:   [{
     type: mongoose.Schema.ObjectId, ref: 'Users'
+  }], routes: [{
+    type: mongoose.Schema.ObjectId, ref: 'Routes'
   }]
 } );
 

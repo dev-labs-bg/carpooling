@@ -121,3 +121,43 @@ module.exports.getAll = function( res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to add new route to the given group
+ *
+ * @param {String} groupId - The id of the group to which the new route will be added
+ * @param {String}routeId - The id of the new route
+ * @param res - The response of the HTTP request
+ */
+module.exports.addRoute = function( groupId, routeId, res ) {
+  this.getById( groupId )
+    .then( function( product ) {
+      product.routes.push( routeId );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group not found', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to remove route by id from the given group
+ *
+ * @param {String} groupId - The id of the group from which the route will be removed
+ * @param {String} routeId - The id of the route which will be removed
+ * @param res - The response of the HTTP request
+ */
+module.exports.deleteRoute = function( groupId, routeId, res ) {
+  this.getById( groupId )
+    .then( function( product ) {
+      product.routes = _.remove( product.routes, function( route ) {
+        return route != routeId;
+      } );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group not found', error: err
+    } );
+  } );
+};

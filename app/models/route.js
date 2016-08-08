@@ -11,7 +11,7 @@ var addressSchema = new Schema( {
 // The passenger schema is used in the route schema
 var passengerSchema = new Schema( {
   user_id:    {
-    type: mongoose.Schema.objectId, ref: 'Users', required: true
+    type: mongoose.Schema.ObjectId, ref: 'Users', required: true
   }, address: {
     type: addressSchema, required: true
   }
@@ -19,19 +19,17 @@ var passengerSchema = new Schema( {
 
 // The route schema is used to create the route model
 var routeSchema = new Schema( {
-  group_id:         {
-    type: mongoose.Schema.ObjectId, ref: 'Groups', requred: true
-  }, start_address: {
+  group_id:           {
+    type: mongoose.Schema.ObjectId, ref: 'Groups', required: true
+  }, "start_address": {
     type: addressSchema, required: true
-  }, end_address:   {
-    type: addressSchema, requred: true
-  }, start_time:    {
-    type: Date, requred: true
-  }, driver_id:     {
+  }, end_address:     {
+    type: addressSchema, required: true
+  }, start_time:      {
+    type: Date, required: true
+  }, driver_id:       {
     type: mongoose.Schema.ObjectId, ref: 'Users', required: true
-  }, passengers:    [{
-    type: passengerSchema, required: true
-  }]
+  }, passengers:      [passengerSchema]
 } );
 
 // Creates the route model in the database and put it in the module.exmports
