@@ -23,4 +23,12 @@ module.exports = function( app ) {
 
     routeRepository.getAllPassengers( routeId, res );
   } );
+
+  // Delete passenger by id of the given route
+  app.delete( '/api/routes/:routeId/passengers/:passengerId', function( req, res ) {
+    var routeId = req.params.routeId;
+    var passengerId = req.params.passengerId;
+
+    routeRepository.deletePassengerById( routeId, passengerId, res );
+  } )
 };

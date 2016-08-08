@@ -124,3 +124,27 @@ module.exports.getAllPassengers = function( id, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to delete passenger by id
+ *
+ * @param {String} routeId - The id of the route whose passenger will be deleted
+ * @param {String} passengerId - The id of the passenger which will be deleted
+ * @param res - The response of the HTTP request
+ */
+module.exports.deletePassengerById = function( routeId, passengerId, res ) {
+  this.findById( routeId )
+    .then( function( product ) {
+      product.passengers = _.remove( product.passengers, function( passenger ) {
+        return passenger._id != passengerId;
+      } );
+      product.save();
+      res.json( {
+        success: true, message: 'Passenger delete successfully'
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Failed to delete passenger', error: err
+    } );
+  } );
+};
