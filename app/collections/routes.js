@@ -9,8 +9,4 @@ var routeRepository = require( '../repositories/route.js' );
  */
 module.exports = function( app ) {
 
-  // Get all routes
-  app.get( '/api/routes', function( req, res ) {
-    routeRepository.getAll( res );
-  } );
 };

@@ -3,7 +3,6 @@ var authService = require( '../services/auth.js' );
 var groupRepository = require( '../repositories/group.js' );
 var groupService = require( '../services/group.js' );
 var usersApi = require( './groups/users.js' );
-var groupsCollection = require( '../collections/groups.js' );
 
 /**
  * This is the main part of the groups api
@@ -63,6 +62,8 @@ module.exports = function( app ) {
   // The users app will execute all methods connected with the users of a given group
   usersApi( app );
 
-  // The groups collection will execute all methods connected with more than one group
-  groupsCollection( app );
+  // Get all groups from the database
+  app.get( '/api/groups', function( req, res ) {
+    groupRepository.getAll( res );
+  } );
 };

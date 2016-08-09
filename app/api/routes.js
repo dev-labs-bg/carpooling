@@ -2,7 +2,6 @@ var bodyParser = require( 'body-parser' );
 var routeRepository = require( '../repositories/route.js' );
 var routeService = require( '../services/route.js' );
 var passengersApi = require( './routes/passengers.js' );
-var routesCollection = require( '../collections/routes.js' );
 
 /**
  *  This is the main part in the routes api
@@ -53,6 +52,8 @@ module.exports = function( app ) {
   // The passengers api will execute all methods connected with passengers
   passengersApi( app );
 
-  // The routes collection will execute all methods connected with more than one route
-  routesCollection( app );
+  // Get all routes
+  app.get( '/api/routes', function( req, res ) {
+    routeRepository.getAll( res );
+  } );
 };
