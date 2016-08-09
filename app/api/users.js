@@ -5,7 +5,6 @@ var authService = require( '../services/auth.js' );
 var vehiclesApi = require( './users/vehicles.js' );
 var addressesApi = require( './users/addresses.js' );
 var groupsApi = require( './users/groups.js' );
-var usersCollection = require( '../collections/users.js' );
 
 /**
  *  This is the main part in the users api
@@ -84,8 +83,10 @@ module.exports = function( app ) {
   // AddressesApi will execute all methods connected with the addresses of a given user
   addressesApi( app );
 
-  // UsersCollection will execute all methods connected with more than one user
-  usersCollection( app );
+  // Get all users from the database
+  app.get( '/api/users', function( req, res ) {
+    userRepository.getAll( res );
+  } );
 
   // Groups api will execute all methods connected with the groups of a given users
   groupsApi( app );

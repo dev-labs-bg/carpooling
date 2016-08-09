@@ -2,6 +2,7 @@ var mongoose = require( 'mongoose' );
 var Group = require( '../models/group.js' );
 var _ = require( 'lodash' );
 var userRepository = require( './user.js' );
+var routeRepository = require( './route.js' );
 
 /**
  * This method is used to create new group with the given params
@@ -199,5 +200,18 @@ module.exports.removeUser = function( groupId, userId, res ) {
     res.json( {
       success: false, message: 'Group not found', error: err
     } );
+  } );
+};
+
+module.exports.getAllRoutes = function( id ) {
+  this.getById( id )
+    .then( function( product ) {
+      var allRoutesPromises = [];
+      product.routes.forEach( function( route ) {
+        allRoutesPromises.push( routeRepository.getById( route ) );
+      } );
+      return allRoutesPromises;
+    } ).catch( function( err ) {
+    return err;
   } );
 };
