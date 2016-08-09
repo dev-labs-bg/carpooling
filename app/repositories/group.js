@@ -161,3 +161,22 @@ module.exports.deleteRoute = function( groupId, routeId, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to userId to the given groups's users
+ *
+ * @param {String} groupId - The id of the group to which the userId will be added
+ * @param {String} userId - The id of the user who will be added
+ * @param res - The response of the HTTP request
+ */
+module.exports.addUser = function( groupId, userId, res ) {
+  this.getById( groupId )
+    .then( function( product ) {
+      product.users.push( userId );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group not found', error: err
+    } );
+  } );
+};

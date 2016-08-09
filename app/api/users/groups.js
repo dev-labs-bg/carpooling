@@ -1,4 +1,5 @@
 var userRepository = require( '../../repositories/user.js' );
+var userService = require( '../../services/user.js' );
 
 /**
  *  This is the main part in the groups api
@@ -15,4 +16,12 @@ module.exports = function( app ) {
 
     userRepository.getAllGroups( userId, res );
   } );
+
+  // Add the given user to the given group
+  app.post( '/api/users/:userId/groups/:groupId', function( req, res ) {
+    var userId = req.params.userId;
+    var groupId = req.params.groupId;
+
+    userService.addToGroup( userId, groupId, res );
+  } )
 };

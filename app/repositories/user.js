@@ -296,3 +296,22 @@ module.exports.getAllGroups = function( id, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to add groupId to the given user's groups
+ *
+ * @param {String} userId - The user to whom the groupId will be added
+ * @param {String} groupId - The id of the group which will be added
+ * @param res - The response of the HTTP request
+ */
+module.exports.addToGroup = function( userId, groupId, res ) {
+  this.findById( userId )
+    .then( function( product ) {
+      product.groups.push( groupId );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'User not found', error: err
+    } );
+  } );
+};
