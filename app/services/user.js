@@ -48,3 +48,25 @@ module.exports.addToGroup = function( userId, groupId, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used to remove given user from a given group
+ *
+ * @param {String} userId - The id of the user who will be removed
+ * @param {String} groupId - The id of the group from which the user will be removed
+ * @param res - The response of the HTTP request
+ */
+module.exports.removeFromGroup = function( userId, groupId, res ) {
+  var promiseArr = [groupRepository.removeUser( groupId, userId, res ), userRepository.removeFromGroup( userId, groupId, res )];
+
+  Promise.all( promiseArr )
+    .then( function() {
+      res.json( {
+        success: true, message: 'User removed successfully from the given group'
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Failed to remove the user from the group', error: err
+    } );
+  } );
+};

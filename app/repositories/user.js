@@ -315,3 +315,24 @@ module.exports.addToGroup = function( userId, groupId, res ) {
     } );
   } );
 };
+
+/**
+ * This method is used remove groupId from the given user's groups
+ *
+ * @param {String} userId - The id of the user from whom the groupId will be removed
+ * @param {String} groupId - The id of the group which will be removed
+ * @param res - The response of the HTTP request
+ */
+module.exports.removeFromGroup = function( userId, groupId, res ) {
+  this.findById( userId )
+    .then( function( product ) {
+      product.groups = _.remove( product.groups, function( group ) {
+        return group != groupId;
+      } );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'User not found', error: err
+    } );
+  } );
+};

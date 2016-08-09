@@ -23,5 +23,13 @@ module.exports = function( app ) {
     var groupId = req.params.groupId;
 
     userService.addToGroup( userId, groupId, res );
-  } )
+  } );
+
+  // Remove the given user from the given group
+  app.delete( '/api/users/:userId/groups/:groupId', function( req, res ) {
+    var userId = req.params.userId;
+    var groupId = req.params.groupId;
+
+    userService.removeFromGroup( userId, groupId, res );
+  } );
 };
