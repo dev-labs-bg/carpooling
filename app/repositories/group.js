@@ -87,7 +87,7 @@ module.exports.getAllUsers = function( id, res ) {
       success: false, message: 'Failed to get all users', error: err
     } );
   } ).then( function( group ) {
-    var allUsersPromises = [], allUsers = [];
+    var allUsersPromises = [];
     group.users.forEach( function( userId ) {
       allUsersPromises.push( userRepository.findById( userId ) );
     } );
@@ -153,6 +153,46 @@ module.exports.deleteRoute = function( groupId, routeId, res ) {
     .then( function( product ) {
       product.routes = _.remove( product.routes, function( route ) {
         return route != routeId;
+      } );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group not found', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to userId to the given groups's users
+ *
+ * @param {String} groupId - The id of the group to which the userId will be added
+ * @param {String} userId - The id of the user who will be added
+ * @param res - The response of the HTTP request
+ */
+module.exports.addUser = function( groupId, userId, res ) {
+  this.getById( groupId )
+    .then( function( product ) {
+      product.users.push( userId );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Group not found', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to remove userId from the given group's users
+ *
+ * @param {String} groupId - The id of the group from which the userId will be removed
+ * @param {String} userId - The id of the user who will be removed
+ * @param res - The response of the HTTP request
+ */
+module.exports.removeUser = function( groupId, userId, res ) {
+  this.getById( groupId )
+    .then( function( product ) {
+      product.users = _.remove( product.users, function( user ) {
+        return user != userId;
       } );
       product.save();
     } ).catch( function( err ) {

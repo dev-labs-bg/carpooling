@@ -1,5 +1,6 @@
 var mongoose = require( 'mongoose' );
 var User = require( '../models/user.js' );
+var groupRepository = require( './group.js' );
 var _ = require( 'lodash' );
 
 /**
@@ -42,16 +43,6 @@ module.exports.findById = function( id ) {
  */
 module.exports.updateById = function( id, userParams ) {
   return User.findByIdAndUpdate( {_id: id}, userParams );
-};
-
-/**
- * This method is used to delete user by given id
- *
- * @param {String} id - The id of the user we need to delete
- * @returns {Promise}
- */
-module.exports.deleteById = function( id ) {
-  return User.findByIdAndRemove( {_id: id} );
 };
 
 /**
@@ -266,6 +257,77 @@ module.exports.deleteRoute = function( userId, routeId, res ) {
     .then( function( product ) {
       product.routes = _.remove( product.routes, function( route ) {
         return route != routeId;
+      } );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'User not found', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to get all groups of the given user
+ *
+ * @param {String} id - The id of the user whose groups we need
+ * @param res - The response of the HTTP request
+ */
+module.exports.getAllGroups = function( id, res ) {
+  this.findById( id )
+    .then( function( product ) {
+      var allGroupsPromises = [];
+      product.groups.forEach( function( groupId ) {
+        allGroupsPromises.push( groupRepository.getById( groupId ) );
+      } );
+
+      Promise.all( allGroupsPromises )
+        .then( function( groups ) {
+          res.json( {
+            success: true, message: 'Got all groups successfully', groups: groups
+          } );
+        } ).catch( function( err ) {
+        res.json( {
+          success: false, message: 'Failed to get all groups', error: err
+        } );
+      } );
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'Failed to get all groups', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used to add groupId to the given user's groups
+ *
+ * @param {String} userId - The user to whom the groupId will be added
+ * @param {String} groupId - The id of the group which will be added
+ * @param res - The response of the HTTP request
+ */
+module.exports.addToGroup = function( userId, groupId, res ) {
+  this.findById( userId )
+    .then( function( product ) {
+      product.groups.push( groupId );
+      product.save();
+    } ).catch( function( err ) {
+    res.json( {
+      success: false, message: 'User not found', error: err
+    } );
+  } );
+};
+
+/**
+ * This method is used remove groupId from the given user's groups
+ *
+ * @param {String} userId - The id of the user from whom the groupId will be removed
+ * @param {String} groupId - The id of the group which will be removed
+ * @param res - The response of the HTTP request
+ */
+module.exports.removeFromGroup = function( userId, groupId, res ) {
+  this.findById( userId )
+    .then( function( product ) {
+      product.groups = _.remove( product.groups, function( group ) {
+        return group != groupId;
       } );
       product.save();
     } ).catch( function( err ) {

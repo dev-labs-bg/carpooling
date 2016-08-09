@@ -4,6 +4,7 @@ var userService = require( '../services/user.js' );
 var authService = require( '../services/auth.js' );
 var vehiclesApi = require( './users/vehicles.js' );
 var addressesApi = require( './users/addresses.js' );
+var groupsApi = require( './users/groups.js' );
 var usersCollection = require( '../collections/users.js' );
 
 /**
@@ -77,22 +78,6 @@ module.exports = function( app ) {
     } );
   } );
 
-  // Delete user by given id
-  app.delete( '/api/users/:id', function( req, res ) {
-    var userId = req.params.id;
-
-    userRepository.deleteById( userId )
-      .then( function( product ) {
-        res.json( {
-          success: true, message: 'User deleted successfully'
-        } );
-      } ).catch( function( err ) {
-      res.json( {
-        success: false, message: 'Failed to delete user'
-      } );
-    } );
-  } );
-
   // VehiclesApi will execute all methods connected with the vehicles of a given user
   vehiclesApi( app );
 
@@ -101,4 +86,7 @@ module.exports = function( app ) {
 
   // UsersCollection will execute all methods connected with more than one user
   usersCollection( app );
+
+  // Groups api will execute all methods connected with the groups of a given users
+  groupsApi( app );
 };
