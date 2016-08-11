@@ -24,9 +24,15 @@ module.exports = function( app ) {
     var userParams = req.body;
     userRepository.create( userParams )
       .then( function( product ) {
-        res.json( product );
+        var tokenObject = userService.authenticateUser( product, product.password );
+        res.json( {
+          success: true,
+          message: 'User registered successfully',
+          user:    product,
+          token:   tokenObject.token
+        } );
       } ).catch( function( err ) {
-      res.json( err );
+      res.send( 400 ).json( err );
     } );
   } );
 
@@ -35,12 +41,19 @@ module.exports = function( app ) {
     var userEmail = req.body.email;
     var userPassword = req.body.password;
 
+    if ( !userEmail || !userPassword ) res.status( 400 ).json( {
+      success: false, message: 'Email or password is empty'
+    } );
+
     // Find user by the given email and authenticate him
     userRepository.findByEmail( userEmail )
       .then( function( product ) {
+        if ( !product ) res.status( 400 ).json( {
+          success: false, message: 'No user found'
+        } );
         return product;
       } ). catch( function( err ) {
-      res.json( err );
+      res.status( 400 ).json( err );
     } ).then( function( user ) {
       res.json( userService.authenticateUser( user, userPassword ) );
     } );
